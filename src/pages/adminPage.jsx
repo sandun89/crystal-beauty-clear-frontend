@@ -2,6 +2,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
 import { TiThListOutline } from "react-icons/ti";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
+import AdminProductsPage from "./admin/products";
 
 export default function AdminPage(){
     return(
@@ -14,7 +15,7 @@ export default function AdminPage(){
             <div className="w-[calc(100vw-300px)] h-full rounded-lg shadow-2xl bg-white">
                 <Routes path="/*">
                     <Route path="/users" element={<h1>users</h1>} />
-                    <Route path="/products" element={<h1>products</h1>} />
+                    <Route path="/products" element={<AdminProductsPage/>} />
                     <Route path="/orders" element={<h1>orders</h1>} />
                 </Routes>
             </div>

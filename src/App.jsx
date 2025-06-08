@@ -2,10 +2,12 @@ import "./App.css";
 import LoginPage from "./pages/loginPage";
 import AdminPage from "./pages/adminPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return(
     <BrowserRouter>
+    <Toaster position="top-right"/>
       <Routes path="/*">
         <Route path="/admin/*" element={<AdminPage/>} />
         <Route path="/login" element={<LoginPage/>} />
