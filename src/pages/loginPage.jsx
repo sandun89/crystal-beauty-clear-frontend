@@ -4,12 +4,13 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     function handleLogin() {
+      setLoading(true);
       axios
         .post(import.meta.env.VITE_BACKEND_URL + "/api/user/login", {
           email: email,
@@ -25,9 +26,11 @@ export default function LoginPage() {
           } else {
             navigate("/");
           }
+          setLoading(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message || "Login Failed")
+          toast.error(error.response.data.message || "Login Failed");
+          setLoading(false);
         });
     }
 
@@ -40,7 +43,11 @@ export default function LoginPage() {
           <div className="w-full h-full flex justify-center flex-col items-center my-[10px]">
             <input onChange={(evt)=>{ setEmail( evt.currentTarget.value)}} type="email" placeholder="Email" className="w-[90%] h-[40px] rounded-full text-center border m-[8px] border-white"/>
             <input onChange={(evt)=>{ setPassword( evt.currentTarget.value)}} type="password" placeholder="Password" className="w-[90%] h-[40px] rounded-full text-center border m-[8px] border-white" />
-            <button onClick={handleLogin} className="w-[90%] h-[40px] m-[8px] rounded-full bg-green-700 text-white">Login</button>
+            <button onClick={handleLogin} className="w-[90%] h-[40px] m-[8px] rounded-full bg-green-700 text-white">
+              {
+                loading ? "Loading..." : "Login" 
+              }
+            </button>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { TiThListOutline } from "react-icons/ti";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import AdminProductsPage from "./admin/products";
 import AddProduct from "./admin/addProduct";
+import EditProduct from "./admin/editProduct";
 
 export default function AdminPage(){
     return(
@@ -18,6 +19,7 @@ export default function AdminPage(){
                     <Route path="/users" element={<h1>users</h1>} />
                     <Route path="/products" element={<AdminProductsPage/>} />
                     <Route path="/addProduct" element={<AddProduct/>} />
+                    <Route path="/editProduct" element={<EditProduct/>} />
                     <Route path="/orders" element={<h1>orders</h1>} />
                 </Routes>
             </div>
