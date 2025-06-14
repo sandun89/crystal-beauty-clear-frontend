@@ -31,8 +31,7 @@ export default function RegisterPage(){
 
     setLoading(true);
     const payload = formData;
-
-      axios.post(import.meta.VITE_BACKEND_URL + "/api/user/", payload).then(
+      axios.post(import.meta.env.VITE_BACKEND_URL + "/api/user/", payload).then(
         (response) => {
           toast.success("Registration Successfull");
           navigate("/login");
