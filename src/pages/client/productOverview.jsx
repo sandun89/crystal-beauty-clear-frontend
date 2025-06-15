@@ -21,7 +21,7 @@ export default function ProductOverview(){
             if(status == "loading") {
                 axios.get(import.meta.env.VITE_BACKEND_URL + "/api/product/" + params.id).then(
                     (response) => {
-                        setProduct(response.data);
+                        setProduct(response.data.product);
                         setStatus("loaded");
                     }
                 ).catch(
@@ -38,13 +38,42 @@ export default function ProductOverview(){
     return (
       <div className="w-full h-full">
         {status == "loading" && <Loader />}
-        {status == "loaded" && 
-        <div className="w-full h-full flex flex-row">
-            <div className="w-[50%] h-full bg-blue-400">
-                <ImageSlider images={product.images}/>
+        {status == "loaded" && (
+          <div className="w-full h-full flex flex-row">
+            <div className="w-[50%] h-full">
+              <ImageSlider images={product.images} />
             </div>
-            <div className="w-[50%] h-full bg-amber-400"></div>
-        </div>}
+            <div className="w-[50%] h-full p-[50px]">
+              <h1 className="text-3xl text-center font-bold">{product.name}</h1>
+              <h2 className="text-2xl text-gray-500 text-center font-semibold">
+                {product.altName.join(" | ")}
+              </h2>
+              <div className="w-full flex justify-center text-2xl font-semibold my-[40px]">
+                {product.labledPrice > product.price ? (
+                  <>
+                    <h2 className="mx-[5px]">
+                      LKR: {product.price.toFixed(2)}
+                    </h2>
+                    <h2 className="line-through text-gray-500">
+                      LKR: {product.labledPrice.toFixed(2)}
+                    </h2>
+                  </>
+                ) : (
+                  <h2>LKR: {product.price.toFixed(2)}</h2>
+                )}
+              </div>
+              <h2 className="text-gray-600">{product.description}</h2>
+              <div className="w-full flex justify-center my-[40px]">
+                <button className="w-[200px] bg-amber-800 text-white border cursor-pointer border-amber-700 p-[10px] mx-[10px] rounded hover:bg-amber-100 hover:text-gray-900">
+                  Add to Cart
+                </button>
+                <button className="w-[200px] bg-amber-800 text-white border cursor-pointer border-amber-700 p-[10px] mx-[10px] rounded hover:bg-amber-100 hover:text-gray-900">
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {status == "error" && <div>Error</div>}
       </div>
     );
