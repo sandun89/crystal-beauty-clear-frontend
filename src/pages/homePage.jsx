@@ -5,9 +5,9 @@ import ProductOverview from "./client/productOverview";
 
 export default function HomePage(){
     return(
-        <div className="w-full h-screen max-h-screen">
+        <div className="w-full h-screen">
             <Header/>
-            <div className="w-full min-h-[calc(100vh-75px)]">
+            <div className="w-full h-[calc(100vh-75px)] min-h-[calc(100vh-75px)]">
                 <Routes path="/">
                     <Route path="/products" element={<ProductsPage/>} />
                     <Route path="/overview/:id" element={<ProductOverview/>} />
