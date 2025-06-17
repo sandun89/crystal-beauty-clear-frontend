@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../../components/loader"; 
 import ImageSlider from "../../components/imageSlider";
@@ -9,6 +9,7 @@ import { addToCart, getCart } from "../../utils/cart";
 export default function ProductOverview(){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     if (params.id == null) {
         window.location.href = "/products"
@@ -66,18 +67,33 @@ export default function ProductOverview(){
               <h2 className="text-gray-600">{product.description}</h2>
               <div className="w-full flex justify-center my-[40px]">
                 <button
-                  onClick={
-                    () => { 
-                      addToCart(product, 1)
-                      toast.success("Product Added to the Cart");
-                      console.log(getCart())
-                    }
-                  }
+                  onClick={() => {
+                    addToCart(product, 1);
+                    toast.success("Product Added to the Cart");
+                    console.log(getCart());
+                  }}
                   className="w-[200px] bg-amber-800 text-white border cursor-pointer border-amber-700 p-[10px] mx-[10px] rounded hover:bg-amber-100 hover:text-gray-900"
                 >
                   Add to Cart
                 </button>
-                <button className="w-[200px] bg-amber-800 text-white border cursor-pointer border-amber-700 p-[10px] mx-[10px] rounded hover:bg-amber-100 hover:text-gray-900">
+                <button
+                  onClick={() => {
+                    navigate("/checkout", {
+                      state: { items: [
+                        {
+                          productId: product.productId,
+                          name: product.name,
+                          altName: product.altName,
+                          price: product.price,
+                          labledPrice: product.labledPrice,
+                          image: product.images[0],
+                          quantity: 1
+                        }
+                      ] }
+                    });
+                  }}
+                  className="w-[200px] bg-amber-800 text-white border cursor-pointer border-amber-700 p-[10px] mx-[10px] rounded hover:bg-amber-100 hover:text-gray-900"
+                >
                   Buy Now
                 </button>
               </div>
