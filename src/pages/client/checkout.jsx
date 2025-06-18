@@ -3,12 +3,46 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GoTrash } from "react-icons/go";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function CheckoutPage(){
     const location = useLocation();
     const [cart, setCart] = useState(location.state.items);
     const [cartRefresh, setCartRefresh] = useState(false);
     const navigate = useNavigate();
+
+    async function placeOrder(){
+      const orderData = {
+        name: "a",
+        address: "a",
+        phoneNumber: "123",
+        billItems: []
+      }
+
+      for (let i = 0; i < cart.length; i++) {
+        const billItem = cart[i];
+        orderData.billItems[i] = {
+          productId: billItem.productId,
+          quantity: billItem.quantity
+        };
+      }
+
+      const token = localStorage.getItem("authToken");
+      console.log(orderData);
+      await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/order", orderData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }).then(
+            (response) => {
+              toast.success("Order Placed Successfully");
+              navigate("/");
+            }).catch((error)=> {
+              console.log(error);
+              toast.error("Örder Placement Failed");
+            })
+    }
 
     function getTotal(){
       let total = 0;
@@ -108,12 +142,10 @@ export default function CheckoutPage(){
           </div>
           <div className="w-full flex justify-end mt-[10px]">
             <button
-              onClick={() => {
-                navigate("/checkout", { state: { items: cart } });
-              }}
+              onClick={ placeOrder }
               className="w-[150px] bg-green-700 text-white border border-green-700 p-[8px] rounded hover:bg-green-200 hover:text-black cursor-pointer"
             >
-              Checkout
+              Place Order
             </button>
           </div>
         </div>
