@@ -10,15 +10,16 @@ export default function CheckoutPage(){
     const location = useLocation();
     const [cart, setCart] = useState(location.state.items);
     const [cartRefresh, setCartRefresh] = useState(false);
+    const [orderData, setOrderData] = useState({
+      name: "",
+      address: "",
+      phoneNumber: "",
+      billItems: []
+    });
     const navigate = useNavigate();
 
     async function placeOrder(){
-      const orderData = {
-        name: "a",
-        address: "a",
-        phoneNumber: "123",
-        billItems: []
-      }
+      orderData.billItems = []
 
       for (let i = 0; i < cart.length; i++) {
         const billItem = cart[i];
@@ -27,9 +28,8 @@ export default function CheckoutPage(){
           quantity: billItem.quantity
         };
       }
-
+     
       const token = localStorage.getItem("authToken");
-      console.log(orderData);
       await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/order", orderData, {
             headers: {
               Authorization: "Bearer " + token,
@@ -42,6 +42,11 @@ export default function CheckoutPage(){
               console.log(error);
               toast.error("Örder Placement Failed");
             })
+    }
+
+    function handleChange(evt) {
+      const {name, value} = evt.target;
+      setOrderData((prev) => ({...prev, [name]: value}));
     }
 
     function getTotal(){
@@ -122,23 +127,35 @@ export default function CheckoutPage(){
               </div>
             );
           })}
-          <div className="w-full flex justify-end mt-2">
-            <h1 className="w-[100px] text-xl text-end">Total</h1>
-            <h1 className="w-[100px] text-xl text-end pr-2">
+          <div className="w-full flex justify-end mt-4">
+            <h1 className="w-[150px] text-xl text-start">Total</h1>
+            <h1 className="w-[200px] text-xl text-end pr-2">
               {getTotalForLabledPrice().toFixed(2)}
             </h1>
           </div>
           <div className="w-full flex justify-end mt-2">
-            <h1 className="w-[100px] text-xl text-end">Discount</h1>
-            <h1 className="w-[100px] text-xl text-end pr-2 border-b-[2px]">
+            <h1 className="w-[150px] text-xl text-start">Discount</h1>
+            <h1 className="w-[200px] text-xl text-end pr-2 border-b-[2px]">
               {(getTotalForLabledPrice() - getTotal()).toFixed(2)}
             </h1>
           </div>
           <div className="w-full flex justify-end mt-2">
-            <h1 className="w-[100px] text-xl text-end">Net Total</h1>
-            <h1 className="w-[100px] text-xl text-end pr-2 border-b-[4px] border-double">
+            <h1 className="w-[150px] text-xl text-start">Net Total</h1>
+            <h1 className="w-[200px] text-xl text-end pr-2 border-b-[6px] border-double">
               {getTotal().toFixed(2)}
             </h1>
+          </div>
+          <div className="w-full flex justify-end mt-[10px]">
+            <h1 className="w-[150px] text-xl text-start">Customer Name</h1>
+            <input onChange={handleChange} name="name" type="text" className="w-[200px] border-b-[2px] text-xl text-end focus:outline-none" />
+          </div>
+          <div className="w-full flex justify-end mt-[10px]">
+            <h1 className="w-[150px] text-xl text-start">Address</h1>
+            <input onChange={handleChange} name="address" type="text" className="w-[200px] border-b-[2px] text-xl text-end focus:outline-none" />
+          </div>
+          <div className="w-full flex justify-end mt-[10px]">
+            <h1 className="w-[150px] text-xl text-start">Phone Number</h1>
+            <input onChange={handleChange} name="phoneNumber" type="text" className="w-[200px] border-b-[2px] text-xl text-end focus:outline-none" />
           </div>
           <div className="w-full flex justify-end mt-[10px]">
             <button
