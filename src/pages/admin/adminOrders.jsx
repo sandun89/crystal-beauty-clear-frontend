@@ -3,6 +3,7 @@ import axios from "axios";
 import Loader from "../../components/loader";
 import { MdClose } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 export default function AdminOrders(){
 
@@ -38,7 +39,10 @@ export default function AdminOrders(){
           Authorization: "Bearer " + token
         }
       }).then(()=>{
-        toast.success("Order Status Changed Successfully")
+        toast.success("Order Status Changed Successfully");
+        setLoaded(false);
+      }).catch((error) => {
+        console.log(error)
       })
     }
      
@@ -86,7 +90,9 @@ export default function AdminOrders(){
                                               {order.phoneNumber}
                                             </td>
                                             <td className="p-2">
-                                              <select onChange={ (evt)=> {}} value={order.status}>
+                                              <select onChange={ (evt)=> {
+                                                changeOrderStatus(order.orderId, evt.target.value);
+                                              }} value={order.status}>
                                                 <option value="Pending">
                                                   Pending
                                                 </option>
