@@ -3,12 +3,24 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import { IoLogoGoogle } from "react-icons/io";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const loginWithGoogle = useGoogleLogin(
+      {
+        onSuccess: (response) => {
+          setLoading(true);
+          axios.post(import.meta.env.VITE_BACKEND_URL + "/api/user/google",{
+            accessToken: response.access_token
+          })
+        }
+      }
+    );
 
     function handleLogin() {
       setLoading(true);
@@ -42,16 +54,43 @@ export default function LoginPage() {
         <div className="w-[450px] h-[450px] p-[10px] border border-blue-200 flex flex-col backdrop-blur-md shadow-2xl rounded-xl">
           {/* <div className="w-full text-center text-3xl border-b-[2px] p-[4px] border-white">Login</div>       */}
           <div className="w-full h-full flex justify-center flex-col items-center my-[10px]">
-            <input onChange={(evt)=>{ setEmail( evt.currentTarget.value)}} type="email" placeholder="Email" className="w-[90%] h-[40px] rounded-full text-center border m-[8px] border-white"/>
-            <input onChange={(evt)=>{ setPassword( evt.currentTarget.value)}} type="password" placeholder="Password" className="w-[90%] h-[40px] rounded-full text-center border m-[8px] border-white" />
-            <button onClick={handleLogin} className="w-[90%] h-[40px] m-[8px] rounded-full bg-green-700 text-white">
-              {
-                loading ? "Loading..." : "Login" 
-              }
+            <input
+              onChange={(evt) => {
+                setEmail(evt.currentTarget.value);
+              }}
+              type="email"
+              placeholder="Email"
+              className="w-[90%] h-[40px] rounded-xl text-center border m-[8px] border-white"
+            />
+            <input
+              onChange={(evt) => {
+                setPassword(evt.currentTarget.value);
+              }}
+              type="password"
+              placeholder="Password"
+              className="w-[90%] h-[40px] rounded-xl text-center border m-[8px] border-white"
+            />
+            <button
+              onClick={handleLogin}
+              className="w-[90%] h-[40px] m-[8px] rounded-xl bg-green-700 text-white"
+            >
+              {loading ? "Loading..." : "Login"}
+            </button>
+            <button
+              onClick={loginWithGoogle}
+              className="w-[90%] h-[40px] m-[4px] flex justify-center items-center rounded-xl bg-green-700 text-white"
+            >
+              <IoLogoGoogle />
+              {loading ? "Loading..." : "Login with Google"}
             </button>
             <div className="mt-[5px]">
               <span>Don't Have an Account yet? </span>
-              <Link to={"/register"} className="text-blue-600 hover:animate-pulse hover:text-blue-800">Register</Link>
+              <Link
+                to={"/register"}
+                className="text-blue-600 hover:animate-pulse hover:text-blue-800"
+              >
+                Register
+              </Link>
             </div>
           </div>
         </div>
