@@ -5,6 +5,8 @@ import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { emptyCart } from "../../utils/cart"
+
 
 export default function CheckoutPage(){
     const location = useLocation();
@@ -37,7 +39,8 @@ export default function CheckoutPage(){
           }).then(
             (response) => {
               toast.success("Order Placed Successfully");
-              navigate("/");
+              emptyCart();
+              window.location.href = "/";
             }).catch((error)=> {
               console.log(error);
               toast.error("Order Placement Failed");

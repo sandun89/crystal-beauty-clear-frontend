@@ -43,6 +43,10 @@ export function removeFromCart(productId){
     return cart;
 }
 
+export function emptyCart(){
+    localStorage.removeItem("cart");
+}
+
 export function getTotal(){
     let cart = getCart();
     let total = 0;
