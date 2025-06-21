@@ -15,7 +15,6 @@ export default function HomePage(){
                     <Route path="/overview/:id" element={<ProductOverview/>} />
                     <Route path="/cart" element={<CartView/>} />
                     <Route path="/checkout" element={<CheckoutPage/>} />
-                    <Route path="/" element={<h1>homw</h1>} />
                     <Route path="/*" element={<h1>Test</h1>} />
                 </Routes>
             </div>

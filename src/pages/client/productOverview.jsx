@@ -70,7 +70,6 @@ export default function ProductOverview(){
                   onClick={() => {
                     addToCart(product, 1);
                     toast.success("Product Added to the Cart");
-                    console.log(getCart());
                   }}
                   className="w-[200px] bg-amber-800 text-white border cursor-pointer border-amber-700 p-[10px] mx-[10px] rounded hover:bg-amber-100 hover:text-gray-900"
                 >

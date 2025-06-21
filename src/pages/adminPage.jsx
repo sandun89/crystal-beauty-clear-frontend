@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
 import { TiThListOutline } from "react-icons/ti";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
@@ -6,24 +6,71 @@ import AdminProductsPage from "./admin/products";
 import AddProduct from "./admin/addProduct";
 import EditProduct from "./admin/editProduct";
 import AdminOrders from "./admin/adminOrders";
+import { useEffect, useState } from "react";
+import Loader from "../components/loader";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-export default function AdminPage(){
-    return(
-        <div className="w-full h-screen flex p-2 bg-gradient-to-r from-white to-blue-500">
-            <div className="w-[300px] h-full ps-[5px]">
-                <Link to="/admin/users" className="flex items-center p-2"><FaUsers className="mr-2" />Users</Link>
-                <Link to="/admin/products" className="flex items-center p-2"><TiThListOutline className="mr-2" />Products</Link>
-                <Link to="/admin/orders" className="flex items-center p-2"><LiaFileInvoiceSolid className="mr-2" />Orders</Link>
-            </div>
-            <div className="w-[calc(100vw-300px)] h-full rounded-lg shadow-2xl bg-[url(/admin-bg.jpg)] bg-cover bg-center">
-                <Routes path="/*">
-                    <Route path="/users" element={<h1>users</h1>} />
-                    <Route path="/products" element={<AdminProductsPage/>} />
-                    <Route path="/addProduct" element={<AddProduct/>} />
-                    <Route path="/editProduct" element={<EditProduct/>} />
-                    <Route path="/orders" element={<AdminOrders/>} />
-                </Routes>
-            </div>
-        </div>
-    )
+export default function AdminPage() {
+  const [userValidated, setUserValidated] = useState(false);
+  const navigate = useNavigate();
+  useEffect(
+    () => {
+        const token = localStorage.getItem("authToken");
+        if (token == null) {
+            toast.error("You are not Logged in");
+            navigate("/login")
+        } else {
+            axios.get(import.meta.env.VITE_BACKEND_URL + "/api/user/current", {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            }).then((response)=>{
+                if (response.data.user.role == "admin") {
+                    setUserValidated(true);
+                } else {
+                    toast.error("You are not an Admin");
+                    navigate("/login");
+                }
+            }).catch((error)=>{
+                toast.error("Something Went Wrong Please Login Again as an Admin");
+                navigate("/login");
+            })
+        }
+    }, []
+  );
+
+  return (
+    <div className="w-full h-screen flex p-2 bg-gradient-to-r from-white to-blue-500">
+      {userValidated ? (
+        <>
+          <div className="w-[300px] h-full ps-[5px]">
+            <Link to="/admin/users" className="flex items-center p-2">
+              <FaUsers className="mr-2" />
+              Users
+            </Link>
+            <Link to="/admin/products" className="flex items-center p-2">
+              <TiThListOutline className="mr-2" />
+              Products
+            </Link>
+            <Link to="/admin/orders" className="flex items-center p-2">
+              <LiaFileInvoiceSolid className="mr-2" />
+              Orders
+            </Link>
+          </div>
+          <div className="w-[calc(100vw-300px)] h-full rounded-lg shadow-2xl bg-[url(/admin-bg.jpg)] bg-cover bg-center">
+            <Routes path="/*">
+              <Route path="/users" element={<h1>users</h1>} />
+              <Route path="/products" element={<AdminProductsPage />} />
+              <Route path="/addProduct" element={<AddProduct />} />
+              <Route path="/editProduct" element={<EditProduct />} />
+              <Route path="/orders" element={<AdminOrders />} />
+            </Routes>
+          </div>
+        </>
+      ) : (
+        <Loader />
+      )}
+    </div>
+  );
 }

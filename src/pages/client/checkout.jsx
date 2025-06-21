@@ -40,7 +40,7 @@ export default function CheckoutPage(){
               navigate("/");
             }).catch((error)=> {
               console.log(error);
-              toast.error("Örder Placement Failed");
+              toast.error("Order Placement Failed");
             })
     }
 
