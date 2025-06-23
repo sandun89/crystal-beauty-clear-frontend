@@ -1,6 +1,3 @@
-import { CiCirclePlus } from "react-icons/ci";
-
-
 export default function Reviews(){
     return(
         <div className="w-full h-auto p-[20px] flex flex-col justify-center">

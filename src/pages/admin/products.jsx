@@ -1,106 +1,113 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react"
-import { FaPlus } from "react-icons/fa";
-import { IoTrashOutline } from "react-icons/io5";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "../../components/loader";
 
-export default function AdminProductsPage(){
+export default function AdminProductsPage() {
+  const [products, setProducts] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
 
-    const [products, setProducts] = useState([]);
-    const [loaded, setLoaded] = useState(false);
-    const navigate = useNavigate();
-
-    useEffect(
-        () => {
-          if (!loaded) {
-            axios
-            .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
-            .then((response) => {
-              setProducts(response.data);
-              setLoaded(true);
-            })
-            .catch((error) => {
-              console.log(error);
-            }); 
-          } 
-        },
-        [loaded]
-    )
-
-    async function deleteProduct(id){
-      const token = localStorage.getItem("authToken");
-      if(token == null){
-        toast.error("Please Login to Delete Product");
-        return;
-      }
-
-      try {
-        await axios.delete(import.meta.env.VITE_BACKEND_URL + "/api/product/" + id, {
-          headers: {
-            Authorization: "Bearer " + token
-          }
+  useEffect(() => {
+    if (!loaded) {
+      axios
+        .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
+        .then((response) => {
+          setProducts(response.data);
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        setLoaded(false);
-        toast.success("Product Deleted Successfully");
-      } catch (error) {
-        console.log(error);
-        toast.error("Product Delete Error");
-        return;
-      }
     }
-      
+  }, [loaded]);
 
-    return (
-      <div className="w-full h-full p-2 rounded-lg relative">
-        <Link to="/admin/addProduct" className="bg-green-700 text-white z-50 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-400 hover:text-gray-700 absolute right-5 bottom-5">
-            <FaPlus />
-        </Link>
-        <div className="w-full h-full backdrop-blur-lg rounded-lg shadow-lg shadow-blue-400">
-        {loaded && <table className="w-full">
-          <thead>
-            <tr>
-              <th className="p-2">Product ID</th>
-              <th className="p-2">Name</th>
-              <th className="p-2">Price</th>
-              <th className="p-2">Labeled Price</th>
-              <th className="p-2">Stock</th>
-              <th className="p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product, index) => {
-              return (
-                <tr key={index} className="border-b-1 border-gray-400 text-center cursor-pointer hover:bg-blue-300 hover:text-white">
-                  <td className="p-2">{product.productId}</td>
-                  <td className="p-2">{product.name}</td>
-                  <td className="p-2">{product.price}</td>
-                  <td className="p-2">{product.labledPrice}</td>
-                  <td className="p-2">{product.stock}</td>
-                  <td className="p-2">{product.productId}</td>
-                  <td className="p-2">
-                    <div className="w-full h-full flex justify-center">
-                        <HiOutlinePencilSquare onClick={
-                          ()=>{
+  async function deleteProduct(id) {
+    const token = localStorage.getItem("authToken");
+    if (token == null) {
+      toast.error("Please Login to Delete Product");
+      return;
+    }
+
+    try {
+      await axios.delete(
+        import.meta.env.VITE_BACKEND_URL + "/api/product/" + id,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setLoaded(false);
+      toast.success("Product Deleted Successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Product Delete Error");
+      return;
+    }
+  }
+
+  return (
+    <div className="w-full h-full p-2 rounded-lg relative">
+      <Link
+        to="/admin/addProduct"
+        className="bg-green-700 text-white z-50 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-400 hover:text-gray-700 absolute right-5 bottom-5"
+      >
+        <i class="bi bi-plus"></i>
+      </Link>
+      <div className="w-full h-full backdrop-blur-lg rounded-lg shadow-lg shadow-blue-400">
+        {loaded && (
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="p-2">Product ID</th>
+                <th className="p-2">Name</th>
+                <th className="p-2">Price</th>
+                <th className="p-2">Labeled Price</th>
+                <th className="p-2">Stock</th>
+                <th className="p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product, index) => {
+                return (
+                  <tr
+                    key={index}
+                    className="border-b-1 border-gray-400 text-center cursor-pointer hover:bg-blue-300 hover:text-white"
+                  >
+                    <td className="p-2">{product.productId}</td>
+                    <td className="p-2">{product.name}</td>
+                    <td className="p-2">{product.price}</td>
+                    <td className="p-2">{product.labledPrice}</td>
+                    <td className="p-2">{product.stock}</td>
+                    <td className="p-2">{product.productId}</td>
+                    <td className="p-2">
+                      <div className="w-full h-full flex justify-center">
+                        <i
+                          onClick={() => {
                             navigate("/admin/editProduct", {
-                              state: product
+                              state: product,
                             });
-                          }
-                        } className="text-[24px] mx-1 text-green-600 hover:text-green-800 hover:animate-bounce" />
-                        <IoTrashOutline onClick={()=>{
-                          deleteProduct(product.productId);
-                        }} className="text-[24px] mx-1 text-red-500 hover:text-red-700 hover:animate-bounce" />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>}
-            { !loaded&& <Loader/> }
-        </div>
+                          }}
+                          class="bi bi-pencil-square"
+                        ></i>
+                        <i
+                          onClick={() => {
+                            deleteProduct(product.productId);
+                          }}
+                          class="bi bi-trash"
+                        ></i>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+        {!loaded && <Loader />}
       </div>
-    );
+    </div>
+  );
 }

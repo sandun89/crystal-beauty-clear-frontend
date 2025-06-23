@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../../components/loader";
 import ProductCard from "../../components/productCard";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
-import { GrPowerReset } from "react-icons/gr";
 
 export default function ProductsPage() {
   const [productList, setProductList] = useState([]);
@@ -40,25 +38,25 @@ export default function ProductsPage() {
           }}
           type="text"
           value={search}
-          className="w-[350px] p-[10px] rounded-lg border border-accent text-center focus:outline-none"
+          className="sch"
           placeholder="Enter Product Name"
         />
         <button
           onClick={() => {
             searchProducts();
           }}
-          className="rounded-full ms-[10px] p-[4px] text-4xl border border-red-800 bg-red-800 text-white hover:bg-red-200 hover:text-black cursor-pointer"
+          className="sch-btn"
         >
-          <HiOutlineMagnifyingGlass />
+          <i class="bi bi-search"></i>
         </button>
         <button
           onClick={() => {
             setSearch("");
             setProductsLoaded(false);
           }}
-          className="rounded-full ms-[10px] p-[4px] text-4xl border border-red-800 bg-red-800 text-white hover:bg-red-200 hover:text-black cursor-pointer"
+          className="sch-btn"
         >
-          <GrPowerReset />
+          <i class="bi bi-arrow-clockwise"></i>
         </button>
       </div>
       {productsLoaded ? (

@@ -1,7 +1,4 @@
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { FaUsers } from "react-icons/fa";
-import { TiThListOutline } from "react-icons/ti";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
 import AdminProductsPage from "./admin/products";
 import AddProduct from "./admin/addProduct";
 import EditProduct from "./admin/editProduct";
@@ -46,15 +43,15 @@ export default function AdminPage() {
         <>
           <div className="w-[300px] h-full ps-[5px]">
             <Link to="/admin/users" className="flex items-center p-2">
-              <FaUsers className="mr-2" />
+              <i class="bi bi-people"></i>
               Users
             </Link>
             <Link to="/admin/products" className="flex items-center p-2">
-              <TiThListOutline className="mr-2" />
+              <i class="bi bi-card-checklist"></i>
               Products
             </Link>
             <Link to="/admin/orders" className="flex items-center p-2">
-              <LiaFileInvoiceSolid className="mr-2" />
+              <i class="bi bi-receipt"></i>
               Orders
             </Link>
           </div>

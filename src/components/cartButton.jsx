@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { getCart } from "../utils/cart";
 
@@ -23,7 +22,7 @@ export default function CartButton() {
 
   return (
     <Link to="/cart" className="text-3xl me-[5px] rounded-full relative">
-      <BsCart4 />
+      <i className="bi bi-cart4"></i>
       { itemCount != 0 &&
         <h2 className="absolute w-[20px] h-[20px] text-[12px] flex justify-center items-center rounded-full text-black bg-white top-[-5px] right-[-5px]">
           {itemCount}

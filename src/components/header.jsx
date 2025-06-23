@@ -1,9 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import { LuMenu } from "react-icons/lu";
-import { BsCart4 } from "react-icons/bs";
 import UserInfo from "./userInfo";
 import CartButton from "./cartButton";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const location = useLocation();
