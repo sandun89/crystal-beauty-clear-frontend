@@ -1,19 +1,72 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { LuMenu } from "react-icons/lu";
 import { BsCart4 } from "react-icons/bs";
 import UserInfo from "./userInfo";
 import CartButton from "./cartButton";
+import { useEffect, useRef, useState } from "react";
 
-export default function Header(){
-    return(
-        <header className="w-full h-[75px] bg-accent text-white flex justify-center items-center relative">
-            <div className="w-[400px] flex justify-evenly text-xl">
-                <Link to={"/"}>Home</Link>
-                <Link to={"/products"}>Products</Link>
-                <Link to={"/contact"}>Contact</Link>
-                <Link to={"/review"}>Reviews</Link>
-                <CartButton/>
-                <UserInfo/>
-            </div>
-        </header>
-    );
+export default function Header() {
+  const location = useLocation();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuclass, setMenuClass] = useState("");
+  const currentPath = location.pathname;
+
+  useEffect(() => {
+    const mClass = ((window.innerWidth >= 768) || (menuVisible)) ? "header-item-wrap" : "hidden"; //set initial menu class
+    setMenuClass(mClass);
+
+    const handleClick = (evt) => {
+      if (evt.target.classList.contains("header-item")){
+        setMenuVisible(false)
+      }
+    }
+
+    //add event listner for capture menu click event
+    window.addEventListener("click", handleClick);
+    return() => {
+      window.removeEventListener("click", handleClick)
+    }
+  },[menuVisible]);
+
+  return (
+    <header className="header">
+      <div
+        onClick={() => {
+          const status = menuVisible ? false : true;
+          setMenuVisible(status);
+        }}
+        className="m-icon flex-center"
+      >
+        <i class="bi bi-list"></i>
+      </div>
+      <div className={menuclass}>
+        <Link
+          to={"/"}
+          className={currentPath === "/" ? "header-item-active" : "header-item"}
+        >
+          Home
+        </Link>
+        <Link
+          to={"/products"}
+          className={
+            currentPath === "/products" ? "header-item-active" : "header-item"
+          }
+        >
+          Products
+        </Link>
+        <Link
+          to={"/contact"}
+          className={
+            currentPath === "/contact" ? "header-item-active" : "header-item"
+          }
+        >
+          Contact
+        </Link>
+      </div>
+      <div className="w-full h-[75px] flex items-center justify-end">
+          <CartButton />
+          <UserInfo />
+      </div>
+    </header>
+  );
 }

@@ -46,10 +46,10 @@ export default function RegisterPage(){
 
 
     return (
-      <div className="w-full h-screen bg-[url(/login-bg.jpg)] bg-cover bg-center flex">
-        <div className="w-[50%] h-full"></div>
-        <div className="w-[50%] h-full flex justify-center items-center">
-          <div className="w-[450px] h-[550px] p-[10px] border border-white flex flex-col backdrop-blur-lg shadow-2xl rounded-xl">
+      <div className="w-full h-screen bg-[url(/login-bg.jpg)] bg-cover bg-center flex justify-center">
+        <div className="lg:w-[50%] lg:ml-[50%] h-full flex justify-center items-center">
+          <div className="w-[400px] h-[550px] p-[10px] border border-white flex flex-col backdrop-blur-lg shadow-2xl rounded-xl">
+            <h1 className="w-full font-bold text-xl text-center">Sign Up</h1>
             <div className="w-full h-full flex justify-center flex-col items-center my-[10px]">
               <input
                 name="firstName"

@@ -1,7 +1,56 @@
 @import "tailwindcss";
 
-@theme{
+@theme {
     --color-primary: #343A40;
     --color-secondary: #D4AF37;
     --color-accent: #800020;
+}
+
+.flex-center{
+    @apply flex justify-center items-center;
+}
+
+.btn-sm {
+    @apply p-[4px] mx-[4px]
+}
+
+.btn-md {
+    @apply p-[10px] mx-[10px]
+}
+
+.btn-green-600 {
+    @apply rounded border border-green-600 bg-green-600 text-white hover:bg-green-200 hover:text-black cursor-pointer
+}
+
+.btn-amber-800 {
+    @apply bg-amber-800 text-white border cursor-pointer border-amber-800 rounded hover:bg-amber-100 hover:text-black
+}
+
+.header {
+    @apply w-full h-[75px] absolute top-0 flex justify-center items-center bg-accent text-white relative;
+}
+
+.header-item-wrap {
+    /* samll screen configuation */
+    @apply w-[75%] h-screen z-50 ps-[8px] fixed left-0 top-[75px] flex flex-col;
+    @apply rounded-e-lg shadow-2xl shadow-blue-200 backdrop-blur-[10px];
+
+    /* large screen configuraration */
+    @apply lg:w-[400px]  lg:h-[75px] lg:left-auto lg:justify-evenly lg:items-center;
+    @apply lg:border-none lg:flex-row lg:top-0 lg:bg-transparent lg:shadow-none;
+}
+
+.header-item{
+ @apply p-[12px] my-[4px] text-white bg-gradient-to-r from-gray-500 to-gray-100 rounded-s-full;
+ @apply lg:bg-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-transparent;
+}
+
+.header-item-active{
+    @apply border-0 p-[12px] my-[4px] bg-gradient-to-r from-green-800 to-gray-100 rounded-s-full;
+    @apply lg:border-b-[4px] lg:bg-gradient-to-r lg:from-transparent lg:to-transparent lg:rounded-none lg:border-white;
+}
+
+.m-icon{
+    @apply absolute left-[10px] w-[48px] h-[48px] border border-white p-[4px] rounded-full text-[32px] cursor-pointer;
+    @apply lg:hidden;
 }

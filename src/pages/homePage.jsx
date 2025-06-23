@@ -7,9 +7,9 @@ import CheckoutPage from "./client/checkout";
 
 export default function HomePage(){
     return(
-        <div className="w-full h-screen">
+        <div className="w-full h-screen relative">
             <Header/>
-            <div className="w-full h-[calc(100vh-75px)] min-h-[calc(100vh-75px)]">
+            <div className="w-full h-[calc(100vh-75px)] min-h-[calc(100vh-75px)] top-[75px] fixed overflow-y-scroll">
                 <Routes path="/">
                     <Route path="/products" element={<ProductsPage/>} />
                     <Route path="/overview/:id" element={<ProductOverview/>} />

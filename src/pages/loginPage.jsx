@@ -59,11 +59,10 @@ export default function LoginPage() {
     }
 
   return (
-    <div className="w-full h-screen bg-[url(/login-bg.jpg)] bg-cover bg-center flex">
-      <div className="w-[50%] h-full"></div>
-      <div className="w-[50%] h-full flex justify-center items-center">
-        <div className="w-[450px] h-[450px] p-[10px] border border-blue-200 flex flex-col backdrop-blur-md shadow-2xl rounded-xl">
-          {/* <div className="w-full text-center text-3xl border-b-[2px] p-[4px] border-white">Login</div>       */}
+    <div className="w-full h-screen bg-[url(/login-bg.jpg)] bg-cover bg-center flex justify-center">
+      <div className="lg:w-[50%] lg:ml-[50%] h-full flex justify-center items-center">
+        <div className="w-[400px] h-[450px] p-[10px] border border-blue-200 flex flex-col backdrop-blur-md shadow-2xl rounded-xl">
+          <h1 className="w-full font-bold text-xl text-center">Sign In</h1>
           <div className="w-full h-full flex justify-center flex-col items-center my-[10px]">
             <input
               onChange={(evt) => {
