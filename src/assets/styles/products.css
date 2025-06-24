@@ -1,0 +1,10 @@
+/* products page configuration */
+.sch {
+    @apply w-[250px] p-[10px] rounded-lg border border-accent text-center focus:outline-none;
+    @apply lg:w-[400px]
+}
+
+.sch-btn {
+    @apply rounded-full ms-[10px] w-[48px] h-[48px] text-[28px] border border-red-800 bg-red-800 text-white;
+    @apply hover:bg-red-200 hover:text-black cursor-pointer
+}

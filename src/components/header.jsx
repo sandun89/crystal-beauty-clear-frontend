@@ -10,21 +10,22 @@ export default function Header() {
   const currentPath = location.pathname;
 
   useEffect(() => {
-    const mClass = ((window.innerWidth >= 768) || (menuVisible)) ? "header-item-wrap" : "hidden"; //set initial menu class
+    const mClass =
+      window.innerWidth >= 768 || menuVisible ? "header-item-wrap" : "hidden"; //set initial menu class
     setMenuClass(mClass);
 
     const handleClick = (evt) => {
-      if (evt.target.classList.contains("header-item")){
-        setMenuVisible(false)
+      if (evt.target.classList.contains("header-item")) {
+        setMenuVisible(false);
       }
-    }
+    };
 
     //add event listner for capture menu click event
     window.addEventListener("click", handleClick);
-    return() => {
-      window.removeEventListener("click", handleClick)
-    }
-  },[menuVisible]);
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
+  }, [menuVisible]);
 
   return (
     <header className="header">
@@ -53,17 +54,25 @@ export default function Header() {
           Products
         </Link>
         <Link
-          to={"/contact"}
+          to={"/aboutus"}
           className={
-            currentPath === "/contact" ? "header-item-active" : "header-item"
+            currentPath === "/aboutus" ? "header-item-active" : "header-item"
           }
         >
-          Contact
+          About Us
+        </Link>
+        <Link
+          to={"/myorder"}
+          className={
+            currentPath === "/myorder" ? "header-item-active" : "header-item"
+          }
+        >
+          My Orders
         </Link>
       </div>
       <div className="w-full h-[75px] flex items-center justify-end">
-          <CartButton />
-          <UserInfo />
+        <CartButton />
+        <UserInfo />
       </div>
     </header>
   );

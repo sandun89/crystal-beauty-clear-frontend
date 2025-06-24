@@ -1,0 +1,15 @@
+.btn-sm {
+    @apply p-[4px] mx-[4px]
+}
+
+.btn-md {
+    @apply p-[10px] mx-[10px]
+}
+
+.btn-green-600 {
+    @apply rounded border border-green-600 bg-green-600 text-white hover:bg-green-200 hover:text-black cursor-pointer
+}
+
+.btn-amber-800 {
+    @apply bg-amber-800 text-white border cursor-pointer border-amber-800 rounded hover:bg-amber-100 hover:text-black
+}
