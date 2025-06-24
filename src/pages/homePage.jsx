@@ -5,6 +5,7 @@ import ProductOverview from "./client/productOverview";
 import CartView from "./client/cart";
 import CheckoutPage from "./client/checkout";
 import AboutUs from "./client/aboutUs";
+import MyOrders from "./client/myOrders";
 
 export default function HomePage(){
     return(
@@ -17,6 +18,7 @@ export default function HomePage(){
                     <Route path="/aboutus" element={<AboutUs/>}/>
                     <Route path="/cart" element={<CartView/>} />
                     <Route path="/checkout" element={<CheckoutPage/>} />
+                    <Route path="/myorder" element={<MyOrders/>}/>
                     <Route path="/*" element={<h1>Test</h1>} />
                 </Routes>
             </div>
