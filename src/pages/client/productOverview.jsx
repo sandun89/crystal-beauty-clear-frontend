@@ -9,14 +9,13 @@ import Reviews from "../../components/reviews";
 
 export default function ProductOverview() {
   const params = useParams();
+  const [product, setProduct] = useState(null);
+  const [status, setStatus] = useState("loading"); //loaded, error
   const navigate = useNavigate();
 
   if (params.id == null) {
     window.location.href = "/products";
   }
-
-  const [product, setProduct] = useState(null);
-  const [status, setStatus] = useState("loading"); //loaded, error
 
   useEffect(() => {
     if (status == "loading") {
@@ -34,75 +33,84 @@ export default function ProductOverview() {
   }, [status]);
 
   return (
-    <>
-      <div className="w-full h-full">
-        {status == "loading" && <Loader />}
-        {status == "loaded" && (
-          <div className="w-full h-full flex flex-row">
-            <div className="w-[50%] h-full">
-              <ImageSlider images={product.images} />
+    <div className="w-full h-full">
+      {status == "loading" && <Loader />}
+      {status == "loaded" && (
+        <div class="w-full h-full grid grid-cols-4 grid-rows-8 backdrop-blur-2xl">
+
+          {/* image slider */}
+          <div className="col-span-4 row-span-4 lg:col-span-2 lg:row-span-8 ">
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              <img
+                className="w-[70%] aspect-square object-cover"
+                src="https://picsum.photos/500/500"
+                alt=""
+              />
             </div>
-            <div className="w-[50%] h-full p-[50px]">
-              <h1 className="text-3xl text-center font-bold">{product.name}</h1>
-              <h2 className="text-2xl text-gray-500 text-center font-semibold">
-                {product.altName.join(" | ")}
-              </h2>
-              <div className="w-full flex justify-center text-2xl font-semibold my-[40px]">
-                {product.labledPrice > product.price ? (
-                  <>
-                    <h2 className="mx-[5px]">
-                      LKR: {product.price.toFixed(2)}
-                    </h2>
-                    <h2 className="line-through text-gray-500">
-                      LKR: {product.labledPrice.toFixed(2)}
-                    </h2>
-                  </>
-                ) : (
-                  <h2>LKR: {product.price.toFixed(2)}</h2>
+          </div>
+
+          {/* product details */}
+          <div className="col-span-4 lg:col-span-2 row-span-1 lg:row-span-4 row-start-1 ">
+            <div className="w-full h-full flex flex-col items-center justify-center lg:justify-end">
+              <h1 className="font-bold text-[30px]">{product.name}</h1>
+              <h1 className="text-gray-400">{product.altName.join(" | ")}</h1>
+              <div className="flex">
+                <h1 className="text-gray-400 mx-[4px]">
+                  LKR: {product.price.toFixed(2)}
+                </h1>
+                {product.labledPrice > product.price && (
+                  <h1 className="text-gray-400 mx-[4px] line-through">
+                    LKR: {product.labledPrice.toFixed(2)}
+                  </h1>
                 )}
-              </div>
-              <h2 className="text-gray-600">{product.description}</h2>
-              <div className="w-full flex justify-center my-[40px]">
-                <button
-                  onClick={() => {
-                    addToCart(product, 1);
-                    toast.success("Product Added to the Cart");
-                  }}
-                  className="w-[200px] btn-amber-800 btn-md"
-                >
-                  Add to Cart
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("/checkout", {
-                      state: {
-                        items: [
-                          {
-                            productId: product.productId,
-                            name: product.name,
-                            altName: product.altName,
-                            price: product.price,
-                            labledPrice: product.labledPrice,
-                            image: product.images[0],
-                            quantity: 1,
-                          },
-                        ],
-                      },
-                    });
-                  }}
-                  className="w-[200px] btn-amber-800 btn-md"
-                >
-                  Buy Now
-                </button>
               </div>
             </div>
           </div>
-        )}
-        {status == "error" && <div>Error</div>}
-      </div>
-      <div className="w-full">
-        <Reviews/>
-      </div>
-    </>
+
+          {/* add cart */}
+          <div className="col-span-4 lg:col-span-2 lg:row-span-4">
+            <div class="w-full h-full flex justify-center lg:mt-[25px]">
+              <button
+                onClick={() => {
+                  addToCart(product, 1);
+                  toast.success("Product Added to the Cart");
+                }}
+                className="w-[200px] h-[50px] btn-amber-800 btn-md"
+              >
+                Add to Cart
+              </button>
+              <button
+                onClick={() => {
+                  navigate("/checkout", {
+                    state: {
+                      items: [
+                        {
+                          productId: product.productId,
+                          name: product.name,
+                          altName: product.altName,
+                          price: product.price,
+                          labledPrice: product.labledPrice,
+                          image: product.images[0],
+                          quantity: 1,
+                        },
+                      ],
+                    },
+                  });
+                }}
+                className="w-[200px] h-[50px] btn-amber-800 btn-md"
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
+
+          {/* reviews */}
+          <div className="col-span-4 row-span-8 ">
+            <Reviews/>
+          </div>
+        </div>
+        
+      )}
+    </div>
   );
 }

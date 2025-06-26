@@ -23,6 +23,8 @@
 }
 
 .m-icon {
-    @apply absolute left-[10px] w-[48px] h-[48px] border border-white p-[4px] rounded-full text-[32px] cursor-pointer;
+    @apply absolute left-[10px] w-[48px] h-[48px]  text-[32px] cursor-pointer;
+    @apply flex justify-center items-center;
+    @apply border border-white p-[4px] rounded-full;
     @apply lg:hidden;
 }

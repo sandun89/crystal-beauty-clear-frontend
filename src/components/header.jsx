@@ -34,7 +34,7 @@ export default function Header() {
           const status = menuVisible ? false : true;
           setMenuVisible(status);
         }}
-        className="m-icon flex-center"
+        className="m-icon"
       >
         <i class="bi bi-list"></i>
       </div>
