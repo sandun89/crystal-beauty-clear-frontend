@@ -1,34 +1,74 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
 export default function Reviews(){
+
+    const [reviews, setReviews] = useState();
+    const [review, setReview] = useState("");
+    const [rating, setRating] = useState(0);
+    const [reviewLoaded, setReviewLoaded] = useState(false);
+
+    async function addReview() {
+        const token = localStorage.getItem("authToken");
+        const reviewData = {
+            productId: "PRD250609054230101",
+            review: review,
+            rating: rating
+        }
+        axios.post(import.meta.env.VITE_BACKEND_URL + "/api/review/", reviewData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            }
+        }).then((response)=>{
+            toast.success('Review Added Successfully');
+            setReviewLoaded(false);
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+
+    useEffect(() => {
+      axios.get(import.meta.env.VITE_BACKEND_URL + "/api/review/" + "PRD250609054230101").then(
+        (response) => {
+            if (response.data.reviews.length > 0) {
+                setReviews(response.data.reviews);
+            }
+            setReviewLoaded(true);
+        });
+    },[reviewLoaded]);
 
     return(
         <div className="w-full h-auto p-[10px] mt-[25px] flex flex-col justify-center">
             {/* add review */}
             <div className="w-full h-auto p-[10px] border border-gray-300 rounded shadow-lg shadow-gray-300 text-end">
                 <h1 className="text-start my-[5px] font-semibold">Leave a Review</h1>
-                <textarea className="w-full h-[80px] my-[5px] max-h-[100px] border border-gray-300 overflow-scroll" placeholder="Write a Review"></textarea>
-                <input type="number" min="1" max="5" className="w-full p-[4px] my-[5px] border border-gray-300" placeholder="Rating (1-5)"/>
-                <button className="bg-green-500 p-[4px] rounded my-[4px]">Submit Review</button>
+                <textarea onChange={(evt)=>{ setReview(evt.target.value)}} className="w-full h-[80px] my-[5px] max-h-[100px] border border-gray-300 overflow-scroll" value={review} placeholder="Write a Review"></textarea>
+                <input onChange={(evt)=>{setRating(evt.target.value)}} type="number" min="1" max="5" className="w-full p-[4px] my-[5px] border border-gray-300" value={rating} placeholder="Rating (1-5)"/>
+                <button onClick={addReview} className="bg-green-500 p-[4px] rounded my-[4px]">Submit Review</button>
             </div>
 
-            <ReviewCard/>
-            <ReviewCard/>
-            <ReviewCard/>
-            <ReviewCard/>
-            <ReviewCard/>
-
+            {
+                reviewLoaded && (
+                    reviews.map((review, index)=>{
+                       return <ReviewCard review={review} key={index}/>
+                    })
+                )
+            }
         </div>
     );
 }
 
-export function ReviewCard(){
+export function ReviewCard(props){
+    const review = props.review
     return(
         <div className="w-full h-auto border p-[10px] my-[10px] border-gray-300 rounded shadow-lg">
                 <div className="flex">
-                    <h1 className="w-[50%] font-semibold">Username</h1>
-                    <h1 className="w-[50%] text-end italic text-gray-500">Date Created</h1>
+                    <h1 className="w-[50%] font-semibold">{review.userEmail}</h1>
+                    <h1 className="w-[50%] text-end italic text-gray-500">{review.dateCreated}</h1>
                 </div>
                 <hr className="text-gray-300" />
-                <p className="my-[4px] text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi excepturi adipisci placeat modi qui, harum voluptatem aliquam, nam optio facilis deleniti officiis nulla, asperiores velit nobis maiores et libero molestiae!</p>
+                <p className="my-[4px] text-gray-500">{review.review}</p>
                 <hr className="text-gray-300" />
                 <div className="text-amber-300">★★★★☆</div>
             </div>
