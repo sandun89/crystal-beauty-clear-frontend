@@ -32,26 +32,26 @@ export default function ProductOverview() {
     }
   }, [status]);
 
-  return (
+
+  return(
     <div className="w-full h-full">
       {status == "loading" && <Loader />}
       {status == "loaded" && (
-        <div class="w-full h-full grid grid-cols-4 grid-rows-8 backdrop-blur-2xl">
+      <div className="w-full h-auto lg:h-[80%] flex flex-row">
 
-          {/* image slider */}
-          <div className="col-span-4 row-span-4 lg:col-span-2 lg:row-span-8 ">
-            <div className="w-full h-full flex flex-col justify-center items-center">
-              <img
-                className="w-[70%] aspect-square object-cover"
-                src="https://picsum.photos/500/500"
-                alt=""
-              />
+        {/* image slider large */}
+        <div className="w-full lg:w-[50%] lg:h-full hidden lg:block">
+          <div className="w-full h-full flex flex-col justify-center items-center">
+              <ImageSlider images={product.images}/>
             </div>
-          </div>
+        </div>
+
+        {/* product info */}
+        <div className="w-full lg:w-[50%]">
 
           {/* product details */}
-          <div className="col-span-4 lg:col-span-2 row-span-1 lg:row-span-4 row-start-1 ">
-            <div className="w-full h-full flex flex-col items-center justify-center lg:justify-end">
+          <div className="w-full lg:h-[50%] p-[20px] ">
+            <div className="w-full lg:h-full flex flex-col items-center justify-center lg:justify-end">
               <h1 className="font-bold text-[30px]">{product.name}</h1>
               <h1 className="text-gray-400">{product.altName.join(" | ")}</h1>
               <div className="flex">
@@ -67,9 +67,16 @@ export default function ProductOverview() {
             </div>
           </div>
 
-          {/* add cart */}
-          <div className="col-span-4 lg:col-span-2 lg:row-span-4">
-            <div class="w-full h-full flex justify-center lg:mt-[25px]">
+          {/* image slider mobile */}
+          <div className="w-full block lg:hidden">
+            <div className="w-full  flex flex-col justify-center items-center p-[20px]">
+                <ImageSlider images={product.images}/>
+            </div>
+          </div>
+
+          {/* add to cart */}
+          <div className="w-full lg:h-[50%]">
+            <div class="w-full flex justify-center p-[20px]">
               <button
                 onClick={() => {
                   addToCart(product, 1);
@@ -103,14 +110,12 @@ export default function ProductOverview() {
               </button>
             </div>
           </div>
-
-          {/* reviews */}
-          <div className="col-span-4 row-span-8 ">
-            <Reviews/>
-          </div>
         </div>
-        
+      </div>
       )}
+      <div className="w-full">
+        <Reviews/>
+      </div>
     </div>
   );
 }
