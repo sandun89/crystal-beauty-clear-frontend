@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import { convertToTimeStamp } from "../utils/helperUtils";
 
 export default function Reviews(){
 
@@ -25,9 +26,11 @@ export default function Reviews(){
             }
         }).then((response)=>{
             toast.success('Review Added Successfully');
+            setReview("");
+            setRating("");
             setReviewLoaded(false);
         }).catch((error)=>{
-            console.log(error)
+            toast.error(error.response.data.message)
         })
     }
 
@@ -69,7 +72,7 @@ export function ReviewCard(props){
         <div className="w-full h-auto border p-[10px] my-[10px] border-gray-300 rounded shadow-lg">
                 <div className="flex">
                     <h1 className="w-[50%] font-semibold">{review.userEmail}</h1>
-                    <h1 className="w-[50%] text-end italic text-gray-500">{review.dateCreated}</h1>
+                    <h1 className="w-[50%] text-end italic text-gray-500">{convertToTimeStamp(review.dateCreated)}</h1>
                 </div>
                 <hr className="text-gray-300" />
                 <p className="my-[4px] text-gray-500">{review.review}</p>

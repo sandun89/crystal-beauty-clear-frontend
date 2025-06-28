@@ -38,7 +38,7 @@ export default function UserInfo() {
           className="btn-user-view"
         >
           {user == null ? (<i className="bi bi-person-circle"></i>) : (<span className="btn-user-icon">{user.firstName.charAt(0)}</span>)}
-        </button>ame
+        </button>
       </div>
 
       {userView && (
