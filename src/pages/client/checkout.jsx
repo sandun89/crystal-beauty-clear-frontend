@@ -81,7 +81,7 @@ export default function CheckoutPage(){
                   }}
                   className="absolute right-[-50px] rounded-full w-[40px] h-[40px] flex justify-center items-center text-white bg-red-500 cursor-pointer shadow-red-400"
                 >
-                  <i class="bi bi-trash"></i>
+                  <i className="bi bi-trash"></i>
                 </button>
                 <img
                   src={item.image}
@@ -106,7 +106,7 @@ export default function CheckoutPage(){
                     }}
                     className="bg-gray-500 text-white rounded-full p-[8px] cursor-pointer"
                   >
-                    <i class="bi bi-plus"></i>
+                    <i className="bi bi-plus"></i>
                   </button>
                   <h1 className="text-xl mx-[10px]">{item.quantity}</h1>
                   <button
@@ -118,7 +118,7 @@ export default function CheckoutPage(){
                     }}
                     className="bg-gray-500 text-white rounded-full p-[8px] cursor-pointer"
                   >
-                    <i class="bi bi-dash"></i>
+                    <i className="bi bi-dash"></i>
                   </button>
                 </div>
                 <div className="h-full w-[100px] flex justify-center items-center">

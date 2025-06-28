@@ -47,7 +47,7 @@ export default function ProductsPage() {
           }}
           className="sch-btn"
         >
-          <i class="bi bi-search"></i>
+          <i className="bi bi-search"></i>
         </button>
         <button
           onClick={() => {
@@ -56,7 +56,7 @@ export default function ProductsPage() {
           }}
           className="sch-btn"
         >
-          <i class="bi bi-arrow-clockwise"></i>
+          <i className="bi bi-arrow-clockwise"></i>
         </button>
       </div>
       {productsLoaded ? (

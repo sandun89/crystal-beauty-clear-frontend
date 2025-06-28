@@ -36,7 +36,7 @@ export default function Header() {
         }}
         className="m-icon"
       >
-        <i class="bi bi-list"></i>
+        <i className="bi bi-list"></i>
       </div>
       <div className={menuclass}>
         <Link

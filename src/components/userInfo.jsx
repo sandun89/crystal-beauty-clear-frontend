@@ -37,14 +37,14 @@ export default function UserInfo() {
           }}
           className="btn-user-view"
         >
-          {user == null ? (<i class="bi bi-person-circle"></i>) : (<span className="btn-user-icon">{user.firstName.charAt(0)}</span>)}
-        </button>
+          {user == null ? (<i className="bi bi-person-circle"></i>) : (<span className="btn-user-icon">{user.firstName.charAt(0)}</span>)}
+        </button>ame
       </div>
 
       {userView && (
         <div className="user-view-container">
           <button onClick={()=>{setUserView(false)}} className="btn-user-close">
-            <i class="bi bi-x"></i>
+            <i className="bi bi-x"></i>
           </button>
           <h1 className="font-bold">Welcome to Crystal Beauty Clear</h1>
 

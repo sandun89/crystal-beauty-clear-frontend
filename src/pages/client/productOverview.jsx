@@ -27,7 +27,7 @@ export default function ProductOverview() {
         })
         .catch(() => {
           toast.error("Product not Available");
-          setStatus("error");
+          navigate("/products");
         });
     }
   }, [status]);
@@ -114,7 +114,7 @@ export default function ProductOverview() {
       </div>
       )}
       <div className="w-full">
-        <Reviews/>
+        <Reviews product={product}/>
       </div>
     </div>
   );

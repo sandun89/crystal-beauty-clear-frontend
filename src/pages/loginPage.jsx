@@ -89,7 +89,7 @@ export default function LoginPage() {
               onClick={loginWithGoogle}
               className="w-[90%] h-[40px] m-[4px] flex justify-center items-center rounded-xl bg-blue-700 border border-blue-700 text-white cursor-pointer hover:bg-blue-200 hover:text-black"
             >
-              <i class="bi bi-google mx-2"></i>
+              <i className="bi bi-google mx-2"></i>
               {loading ? "Loading..." : "Login with Google"}
             </button>
             <div className="mt-[5px]">

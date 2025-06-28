@@ -1,18 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 export default function Reviews(){
 
-    const [reviews, setReviews] = useState();
+    const params = useParams();
+    const [reviewLoaded, setReviewLoaded] = useState(false);
+    const [reviews, setReviews] = useState([]);
     const [review, setReview] = useState("");
     const [rating, setRating] = useState(0);
-    const [reviewLoaded, setReviewLoaded] = useState(false);
+    const productId = params.id;
 
     async function addReview() {
         const token = localStorage.getItem("authToken");
         const reviewData = {
-            productId: "PRD250609054230101",
+            productId: productId,
             review: review,
             rating: rating
         }
@@ -29,7 +32,8 @@ export default function Reviews(){
     }
 
     useEffect(() => {
-      axios.get(import.meta.env.VITE_BACKEND_URL + "/api/review/" + "PRD250609054230101").then(
+        // setProductId(props.product.productId);
+      axios.get(import.meta.env.VITE_BACKEND_URL + "/api/review/" + productId).then(
         (response) => {
             if (response.data.reviews.length > 0) {
                 setReviews(response.data.reviews);

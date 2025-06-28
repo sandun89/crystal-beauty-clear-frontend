@@ -54,7 +54,7 @@ export default function AdminProductsPage() {
         to="/admin/addProduct"
         className="bg-green-700 text-white z-50 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-400 hover:text-gray-700 absolute right-5 bottom-5"
       >
-        <i class="bi bi-plus"></i>
+        <i className="bi bi-plus"></i>
       </Link>
       <div className="w-full h-full backdrop-blur-lg rounded-lg shadow-lg shadow-blue-400">
         {loaded && (

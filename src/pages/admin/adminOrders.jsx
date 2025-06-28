@@ -121,7 +121,7 @@ export default function AdminOrders(){
                                                 }}
                                                 className="text-2xl text-white bg-blue-600 p-[4px] rounded border border-blue-600 cursor-pointer hover:bg-blue-100 hover:text-black"
                                               >
-                                                <i class="bi bi-eye"></i>
+                                                <i className="bi bi-eye"></i>
                                               </button>
                                             </td>
                                           </tr>
@@ -136,7 +136,7 @@ export default function AdminOrders(){
                         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-[4px]">
                             <div className="w-[600px] h-[600px] max-h-[600px] relative bg-white">
                                 <button onClick={()=>{setModalDisplay(false)}} className="w-[40px] h-[40px] absolute top-[-20px] right-[-20px] flex justify-center items-center cursor-pointer rounded-full border-[1px] border-red-500 p-[10px] bg-red-500 text-white hover:bg-red-100 hover:text-black">
-                                    <i class="bi bi-x"></i>
+                                    <i className="bi bi-x"></i>
                                 </button>
                                 <div className="w-full h-[150px] p-[5px] text-lg">
                                     <h1 className="py-[4px]">Order ID: {displayOrder.orderId}</h1>

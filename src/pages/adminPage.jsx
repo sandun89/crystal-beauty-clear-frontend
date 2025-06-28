@@ -43,15 +43,15 @@ export default function AdminPage() {
         <>
           <div className="w-[300px] h-full ps-[5px]">
             <Link to="/admin/users" className="flex items-center p-2">
-              <i class="bi bi-people"></i>
+              <i className="bi bi-people"></i>
               Users
             </Link>
             <Link to="/admin/products" className="flex items-center p-2">
-              <i class="bi bi-card-checklist"></i>
+              <i className="bi bi-card-checklist"></i>
               Products
             </Link>
             <Link to="/admin/orders" className="flex items-center p-2">
-              <i class="bi bi-receipt"></i>
+              <i className="bi bi-receipt"></i>
               Orders
             </Link>
           </div>
