@@ -2,12 +2,77 @@ import { useState } from "react";
 import { convertToTimeStamp } from "../utils/helperUtils";
 
 export default function OrderCard(props) {
-  const [detailView, setDetailView] = useState(false);
   const order = props.order;
+  console.log(order)
 
-  const viewClass = detailView
-    ? "fixed w-[98%] h-auto my-[10px] rounded border border-gray-400 backdrop-blur-lg p-[10px]"
-    : "w-[80%] lg:w-[300px] h-auto m-[15px] p-[10px] rounded border border-gray-400 shadow-xl";
+    return (
+      <div className="w-full h-auto rounded-lg border border-gray-200 shadow-xl bg-white p-[10px]">
+        <h1 className="border-b border-b-gray-300">Order Details</h1>
+        <div className="w-full my-[10px] text-left">
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <th>Order Id</th>
+                <td>{order.orderId}</td>
+              </tr>
+              <tr>
+                <th>Order Date</th>
+                <td>{new Date(order.date).toDateString()}</td>
+              </tr>
+              <tr>
+                <th>Customer</th>
+                <td>{order.name}</td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td>{order.address}</td>
+              </tr>
+              <tr>
+                <th>Contact</th>
+                <td>{order.phoneNumber}</td>
+              </tr>
+              <tr>
+                <th>Order Status</th>
+                <td>{order.status}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <h1 className="border-b border-b-gray-300 mb-[10px]">Billing Items Details</h1>
+          <div className="w-full text-start">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-b-gray-300">
+                  {/* <th>Product ID</th> */}
+                  <th className="text-start">Product Name</th>
+                  <th className="text-start">Price</th>
+                  <th className="text-start">Quantity</th>
+                  <th className="text-start">Sub Total</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                {
+                  order.billItems.map((item, index)=>{
+                    return (
+                        <tr key={index}>
+                          {/* <td>{item.productId}</td> */}
+                          <td>{item.productName}</td>
+                          <td>{item.price}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.price * item.quantity}</td>
+                        </tr>
+                    );
+                  })
+                }
+                <tr className="border-y">
+                  <th colSpan="3" className="text-start">Total</th>
+                  <td>{order.total}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    );
 
   return (
     <div className={viewClass}>

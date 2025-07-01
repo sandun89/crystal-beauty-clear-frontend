@@ -8,6 +8,8 @@ export default function MyOrders(){
 
     const [orders, setOrders] = useState({});
     const [ordersLoaded, setOrdersLoaded] = useState(false);
+    const [order, setOrder] = useState({});
+    const[modalIsDisplay, setModalDisplay] = useState(false);
 
     useEffect(() => {
       const token = localStorage.getItem("authToken");
@@ -25,8 +27,8 @@ export default function MyOrders(){
       }
     },[ordersLoaded]);
 
-    return(
-      <div className="w-full p-[5px]">
+    return (
+      <div className="w-full h-full overflow-y-scroll p-[5px]">
         <table className="w-full text-start">
           <thead className="border-y border-y-gray-400">
             <tr>
@@ -39,24 +41,49 @@ export default function MyOrders(){
             </tr>
           </thead>
           <tbody>
-            {
-              ordersLoaded && (
-                orders.map((order, index)=>{
-                  return (
-                    <tr key={"tr" + index} className="border-b border-b-gray-300">
-                      <td className="p-[4px]">{order.orderId}</td>
-                      <td className="p-[4px]">{convertToTimeStamp(order.date)}</td>
-                      <td className="p-[4px]">{order.name}</td>
-                      <td className="p-[4px]">{order.phoneNumber}</td>
-                      <td className="p-[4px]">{order.status}</td>
-                      <td className="p-[4px]">A</td>
-                    </tr>
-                  )
-                })
-              )
-            }
+            {ordersLoaded &&
+              orders.map((order, index) => {
+                return (
+                  <tr key={"tr" + index} className="border-b border-b-gray-300">
+                    <td className="p-[4px]">{order.orderId}</td>
+                    <td className="p-[4px]">
+                      {convertToTimeStamp(order.date)}
+                    </td>
+                    <td className="p-[4px]">{order.name}</td>
+                    <td className="p-[4px]">{order.phoneNumber}</td>
+                    <td className="p-[4px]">{order.status}</td>
+                    <td className="p-[4px]">
+                      <button
+                        onClick={() => {
+                          setOrder(order);
+                          setModalDisplay(true);
+                        }}
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
+
+        {/* order modal */}
+        {modalIsDisplay && (
+          <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center rounded backdrop-blur-md">
+            <div className="w-[450px] h-[500px] rounded relative">
+              <button
+                onClick={() => {
+                  setModalDisplay(false);
+                }}
+                className="absolute w-[32px] aspect-square top-[-16px] right-[-16px] border rounded-full"
+              >
+                <i className="bi bi-x-lg"></i>
+              </button>
+              <OrderCard order={order} />
+            </div>
+          </div>
+        )}
       </div>
     );
 
