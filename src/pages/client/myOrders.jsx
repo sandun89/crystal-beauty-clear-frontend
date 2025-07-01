@@ -70,7 +70,7 @@ export default function MyOrders(){
 
         {/* order modal */}
         {modalIsDisplay && (
-          <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center rounded backdrop-blur-md">
+          <div className="fixed top-[75px] left-0 w-full h-full flex justify-center items-center rounded backdrop-blur-md">
             <div className="w-[450px] h-[500px] rounded relative">
               <button
                 onClick={() => {

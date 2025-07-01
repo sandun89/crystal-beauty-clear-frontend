@@ -6,9 +6,9 @@ export default function OrderCard(props) {
   console.log(order)
 
     return (
-      <div className="w-full h-auto rounded-lg border border-gray-200 shadow-xl bg-white p-[10px]">
-        <h1 className="border-b border-b-gray-300">Order Details</h1>
-        <div className="w-full my-[10px] text-left">
+      <div className="w-full h-auto rounded-lg border border-gray-200 shadow-2xl bg-white p-[10px]">
+        <h1 className="font-semibold">Order Details</h1>
+        <div className="w-full border border-gray-300 rounded p-[4px] mt-[5px] mb-[10px] text-left">
           <table className="w-full">
             <tbody>
               <tr>
@@ -38,16 +38,17 @@ export default function OrderCard(props) {
             </tbody>
           </table>
           </div>
-          <h1 className="border-b border-b-gray-300 mb-[10px]">Billing Items Details</h1>
-          <div className="w-full text-start">
+
+          <h1 className="font-semibold">Billing Items Details</h1>
+          <div className="w-full border border-gray-300 rounded p-[4px] my-[5px] text-left">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-b-gray-300">
+                <tr className="border-b border-b-gray-300 text-sm pb-[5px]">
                   {/* <th>Product ID</th> */}
-                  <th className="text-start">Product Name</th>
-                  <th className="text-start">Price</th>
-                  <th className="text-start">Quantity</th>
-                  <th className="text-start">Sub Total</th>
+                  <th className="text-start py-[4px]">Product Name</th>
+                  <th className="text-start py-[4px]">Price</th>
+                  <th className="text-start py-[4px]">Quantity</th>
+                  <th className="text-start py-[4px]">Sub Total</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
@@ -56,17 +57,17 @@ export default function OrderCard(props) {
                     return (
                         <tr key={index}>
                           {/* <td>{item.productId}</td> */}
-                          <td>{item.productName}</td>
-                          <td>{item.price}</td>
-                          <td>{item.quantity}</td>
-                          <td>{item.price * item.quantity}</td>
+                          <td className="py-[4px] border-b border-b-gray-400">{item.productName}</td>
+                          <td className="py-[4px] border-b border-b-gray-400">{item.price}</td>
+                          <td className="py-[4px] border-b border-b-gray-400">{item.quantity}</td>
+                          <td className="py-[4px] border-b border-b-gray-400">{item.price * item.quantity}</td>
                         </tr>
                     );
                   })
                 }
-                <tr className="border-y">
-                  <th colSpan="3" className="text-start">Total</th>
-                  <td>{order.total}</td>
+                <tr className="border-b ">
+                  <th colSpan="3" className="text-start p-[4px]">Total</th>
+                  <td className="mt-[4px]">{order.total}</td>
                 </tr>
               </tbody>
             </table>

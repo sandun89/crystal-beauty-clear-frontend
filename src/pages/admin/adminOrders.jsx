@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../../components/loader";
 import toast from "react-hot-toast";
+import OrderCard from "../../components/orderCard";
 
 export default function AdminOrders(){
 
@@ -133,35 +134,19 @@ export default function AdminOrders(){
                     </table>
                     {
                         modalIsDisplay && 
-                        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-[4px]">
-                            <div className="w-[600px] h-[600px] max-h-[600px] relative bg-white">
-                                <button onClick={()=>{setModalDisplay(false)}} className="w-[40px] h-[40px] absolute top-[-20px] right-[-20px] flex justify-center items-center cursor-pointer rounded-full border-[1px] border-red-500 p-[10px] bg-red-500 text-white hover:bg-red-100 hover:text-black">
-                                    <i className="bi bi-x"></i>
-                                </button>
-                                <div className="w-full h-[150px] p-[5px] text-lg">
-                                    <h1 className="py-[4px]">Order ID: {displayOrder.orderId}</h1>
-                                    <h1 className="py-[4px]">Order Date: {new Date(displayOrder.date).toDateString()}</h1>
-                                    <h1 className="py-[4px]">Order Status: {displayOrder.status}</h1>
-                                    <h1 className="py-[4px]">Order Total: {displayOrder.total.toFixed(2)}</h1>
-                                </div>
-                                <div className="w-full h-[450px] max-h-[450px] p-[10px] overflow-y-scroll">
-                                  {
-                                    displayOrder.billItems.map((item, index) => {
-                                      return(
-                                        <div key={index} className="w-full h-[100px] my-[5px] flex bg-white shadow-2xl">
-                                          <img src={item.image} className="w-[100px] h-full aspect-square object-cover" alt="" />
-                                          <div className="w-[450px] h-full ms-[10px]">
-                                            <h1 className="text-xl">{item.productName}</h1>
-                                            <h1 className="text-lg">{item.price.toFixed(2)}</h1>
-                                            <h1 className="text-lg">{item.quantity}</h1>
-                                          </div>
-                                        </div>
-                                      );
-                                    })
-                                  }
-                                </div>
-                            </div>
-                        </div>
+                       <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center rounded backdrop-blur-md">
+                                   <div className="w-[450px] h-[500px] rounded relative">
+                                     <button
+                                       onClick={() => {
+                                         setModalDisplay(false);
+                                       }}
+                                       className="absolute w-[32px] aspect-square top-[-16px] right-[-16px] border rounded-full"
+                                     >
+                                       <i className="bi bi-x-lg"></i>
+                                     </button>
+                                     <OrderCard order={displayOrder} />
+                                   </div>
+                                 </div>
                     }
                 </div>
                 :
