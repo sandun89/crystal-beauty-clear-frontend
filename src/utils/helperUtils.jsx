@@ -25,3 +25,7 @@ export function convertToTimeStamp(isoTimestamp) {
 
   return timeStamp;
 }
+
+export function getRandomNumber(numberCount=1){
+  return Math.floor(Math.random() * numberCount);
+}
