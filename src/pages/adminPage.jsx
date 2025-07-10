@@ -1,5 +1,6 @@
 import {
   Link,
+  Links,
   Route,
   Routes,
   useLocation,
@@ -46,19 +47,20 @@ export default function AdminPage() {
         });
     }
   }, []);
-
   
   return (
-    <div className="w-full h-screen flex p-2 bg-gradient-to-r from-white to-blue-500">
+    <div className="w-full h-screen flex p-2 bg-gradient-to-r from-white to-blue-400">
       {userValidated ? (
         <>
-          <div className="w-[300px] h-full ps-[5px]">
+          {/* admin menu container */}
+          <div className="admin-menu-container">
+            <div className="w-full text-center mb-[20px] p-[10px] rounded bg-black text-white">Admin Panel</div>
             <Link
               to="/admin/users"
               className={
                 currentPath === "/admin/users"
-                  ? "header-item-active bg-amber-100"
-                  : "header-item"
+                  ? "menu-item-active"
+                  : "menu-item"
               }
             >
               <i className="bi bi-people"></i>
@@ -69,8 +71,8 @@ export default function AdminPage() {
               to="/admin/products"
               className={
                 currentPath === "/admin/products"
-                  ? "header-item-active bg-amber-100"
-                  : "header-item"
+                  ? "menu-item-active"
+                  : "menu-item"
               }
             >
               <i className="bi bi-card-checklist"></i>
@@ -80,15 +82,22 @@ export default function AdminPage() {
               to="/admin/orders"
               className={
                 currentPath === "/admin/orders"
-                  ? "header-item-active bg-amber-100"
-                  : "header-item"
+                  ? "menu-item-active"
+                  : "menu-item"
               }
             >
               <i className="bi bi-receipt"></i>
               <span className="mx-[5px]">Orders</span>
             </Link>
+
+            <a href="/" target="_blank" className="menu-item">
+              <i className="bi bi-globe"></i>
+              <span className="mx-[5px]">Open Main Web Site</span>
+            </a>
           </div>
-          <div className="w-[calc(100vw-300px)] h-full rounded-lg shadow-2xl bg-white bg-cover bg-center">
+
+          {/* admin data container */}
+          <div className="admin-data-container">
             <Routes path="/*">
               <Route path="/products" element={<AdminProductsPage />} />
               <Route path="/addProduct" element={<AddProduct />} />

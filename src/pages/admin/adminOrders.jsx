@@ -52,44 +52,43 @@ export default function AdminOrders(){
                 loaded ?
                 <div className="w-full h-full rounded-2xl">
                     <table className="w-full text-center rounded-2xl backdrop-blur-2xl">
-                        <thead>
+                        <thead id="order-tbl-head">
                             <tr>
-                                <th className="p-2">Order ID</th>
-                                <th className="p-2">Email</th>
-                                <th className="p-2">Customer</th>
-                                <th className="p-2">Address</th>
-                                <th className="p-2">Phone No.</th>
-                                <th className="p-2">Status</th>
-                                <th className="p-2">Total</th>
-                                <th className="p-2">Date</th>
-                                <th className="p-2">Action</th>
+                                <th>Order ID</th>
+                                <th>Email</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>Phone No.</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="order-tbl-body">
                             {
                                 orders.map(
                                     (order, index) => {
                                         return (
                                           <tr
                                             key={index}
-                                            className="border-b-[2px] border-gray-500 cursor-pointer hover:bg-gray-100"
                                           >
-                                            <td className="p-2">
+                                            <td>
                                               {order.orderId}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               {order.email}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               {order.name}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               {order.address}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               {order.phoneNumber}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               <select onChange={ (evt)=> {
                                                 changeOrderStatus(order.orderId, evt.target.value);
                                               }} value={order.status}>
@@ -107,21 +106,21 @@ export default function AdminOrders(){
                                                 </option>
                                               </select>
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               {order.total.toFixed(2)}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               {new Date(
                                                 order.date
                                               ).toDateString()}
                                             </td>
-                                            <td className="p-2">
+                                            <td>
                                               <button
                                                 onClick={() => {
                                                   setModalDisplay(true);
                                                   setDisplayOrder(order);
                                                 }}
-                                                className="text-xl w-[32px] aspect-square flex items-center justify-center text-white bg-blue-600 rounded border border-blue-600 cursor-pointer hover:bg-blue-100 hover:text-black"
+                                                className="btn-i-sm btn-view-order"
                                               >
                                                 <i className="bi bi-eye"></i>
                                               </button>

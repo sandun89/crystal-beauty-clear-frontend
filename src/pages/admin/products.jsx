@@ -50,42 +50,35 @@ export default function AdminProductsPage() {
 
   return (
     <div className="w-full h-full p-2 rounded-lg relative">
-      <Link
-        to="/admin/addProduct"
-        className="bg-green-700 text-white w-[60px] aspect-square flex items-center justify-center z-50 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-400 hover:text-gray-700 absolute right-5 bottom-5"
-      >
+      <Link to="/admin/addProduct" className="btn-add-product">
         <i className="bi bi-plus"></i>
       </Link>
-      <div className="w-full h-full backdrop-blur-lg rounded-lg shadow-lg shadow-blue-400">
-        {loaded && (
-          <table className="w-full">
-            <thead>
+      { loaded ? (
+      <div className="w-full h-full ">
+          <table id="tbl-product" className="w-full">
+            <thead id="product-tbl-head">
               <tr>
-                <th className="p-2">Product ID</th>
-                <th className="p-2">Name</th>
-                <th className="p-2">Price</th>
-                <th className="p-2">Labeled Price</th>
-                <th className="p-2">Stock</th>
-                <th className="p-2">Actions</th>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Labeled Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product, index) => {
                 return (
-                  <tr
-                    key={index}
-                    className="border-b-1 border-gray-400 text-center cursor-pointer hover:bg-blue-300 hover:text-white"
-                  >
-                    <td className="p-2">{product.productId}</td>
-                    <td className="p-2">{product.name}</td>
-                    <td className="p-2">{product.price}</td>
-                    <td className="p-2">{product.labledPrice}</td>
-                    <td className="p-2">{product.stock}</td>
-                    <td className="p-2">{product.productId}</td>
-                    <td className="p-2">
+                  <tr key={index} className="product-tbl-row">
+                    <td>{product.name}</td>
+                    <td>{product.productId}</td>
+                    <td>{product.price}</td>
+                    <td>{product.labledPrice}</td>
+                    <td>{product.stock}</td>
+                    <td>
                       <div className="w-full h-full flex justify-center">
                         <button
-                        className="w-[32px] p-[4px] border bg-green-500 rounded mx-[4px]"
+                          className="btn-i-sm btn-edit-product"
                           onClick={() => {
                             navigate("/admin/editProduct", {
                               state: product,
@@ -95,7 +88,7 @@ export default function AdminProductsPage() {
                           <i className="bi bi-pencil-square"></i>
                         </button>
                         <button
-                        className="w-[32px] p-[4px] border bg-red-500 rounded mx-[4px]"
+                          className="btn-i-sm btn-del-product"
                           onClick={() => {
                             deleteProduct(product.productId);
                           }}
@@ -109,9 +102,10 @@ export default function AdminProductsPage() {
               })}
             </tbody>
           </table>
-        )}
-        {!loaded && <Loader />}
       </div>
+      ) : (
+        <Loader/>
+      )}
     </div>
   );
 }

@@ -23,14 +23,13 @@ export default function Users() {
     }
   }, [usersLoaded]);
 
-  function updateUser(email, status, user) {
+  function updateUser(email, status) {
     const token = localStorage.getItem("authToken");
     axios.put(
       import.meta.env.VITE_BACKEND_URL + "/api/user",
       {
         email: email,
         isDisabled: status,
-        user: user
       },
       {
         headers: {
@@ -47,9 +46,9 @@ export default function Users() {
     <div className="w-full h-full p-2">
       {usersLoaded ? (
         <div className="w-full h-full overflow-y-scroll">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-b-gray-400">
+          <table id="user-tbl" className="w-full">
+            <thead id="user-tbl-head">
+              <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Email Verified</th>
@@ -58,7 +57,7 @@ export default function Users() {
                 <th>User Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="user-tbl-body">
               {users.map((user, index) => {
                 const userStatus = user.isDisabled ? "Active" : "Disabled";
                 return (
@@ -74,7 +73,7 @@ export default function Users() {
                     <td>
                       <select
                         onChange={(evt) => {
-                          updateUser(user.email, evt.target.value, user);
+                          updateUser(user.email, evt.target.value);
                         }}
                         value={user.isDisabled}
                       >
