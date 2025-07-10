@@ -54,6 +54,7 @@ export default function MyOrders(){
                     <td className="p-[4px]">{order.status}</td>
                     <td className="p-[4px]">
                       <button
+                      className="bg-amber-700 p-[5px] w-[75px] rounded text-white"
                         onClick={() => {
                           setOrder(order);
                           setModalDisplay(true);
@@ -70,8 +71,8 @@ export default function MyOrders(){
 
         {/* order modal */}
         {modalIsDisplay && (
-          <div className="fixed top-[75px] left-0 w-full h-full flex justify-center items-center rounded backdrop-blur-md">
-            <div className="w-[450px] h-[500px] rounded relative">
+          <div className="fixed top-[75px] left-0 w-full h-full flex justify-center items-center rounded backdrop-blur-sm">
+            <div className="w-[450px] border border-gray-300 shadow-2xl rounded relative">
               <button
                 onClick={() => {
                   setModalDisplay(false);
@@ -86,20 +87,6 @@ export default function MyOrders(){
         )}
       </div>
     );
-
-    return(
-        <div className="w-full h-full">
-            <div className="w-full h-auto flex flex-wrap justify-center">
-                {
-                    ordersLoaded && (
-                        orders.map((order, index)=>{
-                           return <OrderCard key={index} order={order}/>
-                        })
-                    )
-                }
-            </div>
-        </div>
-    )
 }
 
 

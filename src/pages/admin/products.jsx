@@ -52,7 +52,7 @@ export default function AdminProductsPage() {
     <div className="w-full h-full p-2 rounded-lg relative">
       <Link
         to="/admin/addProduct"
-        className="bg-green-700 text-white z-50 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-400 hover:text-gray-700 absolute right-5 bottom-5"
+        className="bg-green-700 text-white w-[60px] aspect-square flex items-center justify-center z-50 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-400 hover:text-gray-700 absolute right-5 bottom-5"
       >
         <i className="bi bi-plus"></i>
       </Link>
@@ -84,20 +84,24 @@ export default function AdminProductsPage() {
                     <td className="p-2">{product.productId}</td>
                     <td className="p-2">
                       <div className="w-full h-full flex justify-center">
-                        <i
+                        <button
+                        className="w-[32px] p-[4px] border bg-green-500 rounded mx-[4px]"
                           onClick={() => {
                             navigate("/admin/editProduct", {
                               state: product,
                             });
                           }}
-                          class="bi bi-pencil-square"
-                        ></i>
-                        <i
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                        className="w-[32px] p-[4px] border bg-red-500 rounded mx-[4px]"
                           onClick={() => {
                             deleteProduct(product.productId);
                           }}
-                          class="bi bi-trash"
-                        ></i>
+                        >
+                          <i className="bi bi-trash"></i>
+                        </button>
                       </div>
                     </td>
                   </tr>

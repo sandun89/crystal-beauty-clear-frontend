@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { emptyCart } from "../../utils/cart"
@@ -37,7 +37,7 @@ export default function CheckoutPage(){
             (response) => {
               toast.success("Order Placed Successfully");
               emptyCart();
-              window.location.href = "/";
+              navigate("/");
             }).catch((error)=> {
               console.log(error);
               toast.error("Order Placement Failed");
@@ -65,50 +65,142 @@ export default function CheckoutPage(){
       return total;
     }
 
+     return (
+        <div className="w-full h-full flex flex-col items-center mt-[10px]">
+          <div className="w-[400px] lg:w-[700px]">
+            {cart.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="w-full h-[150px] lg:h-[100px] my-[5px] relative flex shadow-xl shadow-gray-200 border rounded border-gray-300 p-[4px]"
+                >
+                 
+                  <img
+                    src={item.image}
+                    className="h-[100px] lg:h-full rounded-lg aspect-square object-cover"
+                  />
+                  <div className="w-full p-[4px] flex flex-col lg:flex-row lg:items-center">
+                    <div className="w-full lg:w-[400px] h-[95px] overflow-hidden mb-[10px] border-b border-gray-200 lg:border-none">
+                      <h1 className="font-bold lg:text-xl">{item.name}</h1>
+                      <h1 className="text-gray-500 lg:text-lg">
+                        {item.altName.join(" | ")}
+                      </h1>
+                      <h2 className="text-gray-500 lg:text-lg">
+                        {item.price.toFixed(2)}
+                      </h2>
+                    </div>
+                    <div className="w-[150px] h-[26px] rounded flex flex-row justify-between">
+                      <button
+                        onClick={() => {
+                          cart[index].quantity += 1;
+                          setCart(cart);
+                          setCartRefresh(!cartRefresh);
+                        }}
+                        className="w-[30px] h-[30px] flex justify-center items-center bg-gray-400 text-white text-[22px] rounded-full"
+                      >
+                        <i className="bi bi-plus"></i>
+                      </button>
+                      <h1 className="text-center text-gray-800">{item.quantity}</h1>
+                      <button
+                        onClick={() => {
+                          cart[index].quantity -= 1;
+                          cart[index].quantity = (cart[index].quantity <= 0) ? 1 : cart[index].quantity;
+                          setCart(cart);
+                          setCartRefresh(!cartRefresh);
+                        }}
+                        className="w-[30px] h-[30px] flex justify-center items-center bg-gray-400 text-white text-[22px] rounded-full"
+                      >
+                        <i className="bi bi-dash"></i>
+                      </button>
+                      <h1 className="ms-[10px] w-[50px] text-lg">
+                        {item.price * item.quantity}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+    
+            <div className="w-full flex justify-end mt-2">
+              <h1 className="w-[100px] text-xl text-end">Total</h1>
+              <h1 className="w-[100px] text-xl text-end pr-2">
+                {getTotalForLabledPrice().toFixed(2)}
+              </h1>
+            </div>
+            <div className="w-full flex justify-end mt-2">
+              <h1 className="w-[100px] text-xl text-end">Discount</h1>
+              <h1 className="w-[100px] text-xl text-end pr-2 border-b-[2px]">
+                {(getTotalForLabledPrice() - getTotal()).toFixed(2)}
+              </h1>
+            </div>
+            <div className="w-full flex justify-end mt-2">
+              <h1 className="w-[100px] text-xl text-end">Net Total</h1>
+              <h1 className="w-[100px] text-xl text-end pr-2 border-b-[4px] border-double">
+                {getTotal().toFixed(2)}
+              </h1>
+            </div>
+            <div className="w-full flex justify-end mt-[10px]">
+            <h1 className="w-[150px] text-xl text-start">Customer Name</h1>
+            <input onChange={handleChange} name="name" type="text" className="w-[200px] border-b-[2px] text-xl text-end focus:outline-none" />
+          </div>
+          <div className="w-full flex justify-end mt-[10px]">
+            <h1 className="w-[150px] text-xl text-start">Address</h1>
+            <input onChange={handleChange} name="address" type="text" className="w-[200px] border-b-[2px] text-xl text-end focus:outline-none" />
+          </div>
+          <div className="w-full flex justify-end mt-[10px]">
+            <h1 className="w-[150px] text-xl text-start">Phone Number</h1>
+            <input onChange={handleChange} name="phoneNumber" type="text" className="w-[200px] border-b-[2px] text-xl text-end focus:outline-none" />
+          </div>
+          <div className="w-full flex justify-end mt-[10px]">
+            <Link to="/cart" className="w-[150px] bg-green-700 mx-[5px] text-center text-white border border-green-700 p-[8px] rounded hover:bg-green-200 hover:text-black cursor-pointer">Back to Cart</Link>
+            <button
+              onClick={ placeOrder }
+              className="w-[150px] bg-green-700 mx-[5px] text-center text-white border border-green-700 p-[8px] rounded hover:bg-green-200 hover:text-black cursor-pointer"
+            >
+              Place Order
+            </button>
+          </div>
+          </div>
+        </div>
+      );
+
     return (
-      <div className="w-full h-full flex justify-center p-[20px]">
-        <div className="w-[700px]">
+      <div className="w-full h-full flex flex-col items-center mt-[10px]">
+        <div className="w-[400px] lg:w-[700px]">
           {cart.map((item, index) => {
             return (
               <div
                 key={index}
-                className="w-full h-[110px] my-[5px] shadow-xl shadow-blue-200 flex justify-between items-center relative"
+                className="w-full h-[150px] lg:h-[100px] my-[5px] relative flex shadow-xl shadow-gray-200 border rounded border-gray-300 p-[4px]"
               >
-                <button
-                  onClick={() => {
-                    removeFromCart(item.productId);
-                    setCartLoaded(false);
-                  }}
-                  className="absolute right-[-50px] rounded-full w-[40px] h-[40px] flex justify-center items-center text-white bg-red-500 cursor-pointer shadow-red-400"
-                >
-                  <i className="bi bi-trash"></i>
-                </button>
                 <img
                   src={item.image}
                   alt=""
-                  className="h-full aspect-square object-cover rounded"
+                  className="h-[100px] lg:h-full rounded-lg aspect-square object-cover"
                 />
-                <div className="h-full max-w-[400px] w-[450px] ml-[5px] overflow-hidden">
-                  <h1 className="text-xl font-bold">{item.name}</h1>
-                  <h2 className="text-lg text-gray-500">
+                <div className="w-full p-[4px] flex flex-col lg:flex-row lg:items-center">
+                  <div className="w-full lg:w-[400px] h-[95px] overflow-hidden mb-[10px] border-b border-gray-200 lg:border-none">
+                  <h1 className="font-bold lg:text-xl">{item.name}</h1>
+                  <h1 className="text-gray-500 lg:text-lg">
                     {item.altName.join(" | ")}
-                  </h2>
-                  <h2 className="text-lg text-gray-500">
+                  </h1>
+                  <h2 className="text-gray-500 lg:text-lg">
                     {item.price.toFixed(2)}
                   </h2>
+                  </div>
                 </div>
-                <div className="h-full w-[100px] flex justify-center items-center">
+                <div className="w-[150px] h-[26px] rounded flex flex-row justify-between">
                   <button
                     onClick={() => {
                       cart[index].quantity += 1;
                       setCart(cart);
                       setCartRefresh(!cartRefresh);
                     }}
-                    className="bg-gray-500 text-white rounded-full p-[8px] cursor-pointer"
+                    className="w-[30px] h-[30px] flex justify-center items-center bg-gray-400 text-white text-[22px] rounded-full"
                   >
                     <i className="bi bi-plus"></i>
                   </button>
-                  <h1 className="text-xl mx-[10px]">{item.quantity}</h1>
+                  <h1 className="text-xl text-center w-[30px] mx-[10px]">{item.quantity}</h1>
                   <button
                     onClick={() => {
                       cart[index].quantity -= 1;
@@ -116,7 +208,7 @@ export default function CheckoutPage(){
                       setCart(cart);
                       setCartRefresh(!cartRefresh);
                     }}
-                    className="bg-gray-500 text-white rounded-full p-[8px] cursor-pointer"
+                    className="w-[30px] h-[30px] flex justify-center items-center bg-gray-400 text-white text-[22px] rounded-full"
                   >
                     <i className="bi bi-dash"></i>
                   </button>

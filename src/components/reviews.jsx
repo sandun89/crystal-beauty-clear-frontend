@@ -68,6 +68,11 @@ export default function Reviews(){
 
 export function ReviewCard(props){
     const review = props.review
+
+    let rating = "☆☆☆☆☆";
+    for (let i = 0; i < review.rating; i++) {
+        rating += "★";   
+    }
     return(
         <div className="w-full h-auto border p-[10px] my-[10px] border-gray-300 rounded shadow-lg">
                 <div className="flex">
@@ -77,7 +82,11 @@ export function ReviewCard(props){
                 <hr className="text-gray-300" />
                 <p className="my-[4px] text-gray-500">{review.review}</p>
                 <hr className="text-gray-300" />
-                <div className="text-amber-300">★★★★☆</div>
+                <div className="text-amber-300">
+                    {
+                       rating.split("").reverse().join("").substring(0, 5) 
+                    }
+                </div>
             </div>
     );
 }

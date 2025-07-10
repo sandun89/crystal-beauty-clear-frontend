@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import {
   addToCart,
   getCart,
@@ -14,11 +16,17 @@ export default function CartView() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (cartLoaded == false) {
+    if (!cartLoaded) {
       const cart = getCart();
       setCart(cart);
       setCartLoaded(true);
+    } else {
+      if (cart.length==0) {
+        toast.error("Your Cart is Empty")
+        navigate("/products")
+      }
     }
+    
   }, [cartLoaded]);
 
   return (

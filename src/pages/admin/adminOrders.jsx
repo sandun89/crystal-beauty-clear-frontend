@@ -46,7 +46,8 @@ export default function AdminOrders(){
     }
      
     return(
-        <div className="w-full h-full">
+      <div className="w-full h-full p-2 rounded-lg">
+        <div className="w-full h-full overflow-y-scroll">
             {
                 loaded ?
                 <div className="w-full h-full rounded-2xl">
@@ -120,7 +121,7 @@ export default function AdminOrders(){
                                                   setModalDisplay(true);
                                                   setDisplayOrder(order);
                                                 }}
-                                                className="text-2xl text-white bg-blue-600 p-[4px] rounded border border-blue-600 cursor-pointer hover:bg-blue-100 hover:text-black"
+                                                className="text-xl w-[32px] aspect-square flex items-center justify-center text-white bg-blue-600 rounded border border-blue-600 cursor-pointer hover:bg-blue-100 hover:text-black"
                                               >
                                                 <i className="bi bi-eye"></i>
                                               </button>
@@ -152,6 +153,7 @@ export default function AdminOrders(){
                 :
                 <Loader/>
             }
+        </div>
         </div>
     );
 }

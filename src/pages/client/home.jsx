@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { getRandomNumber } from "../../utils/helperUtils";
+import Loader from "../../components/loader";
 
 export default function Home() {
 
@@ -27,7 +29,8 @@ export default function Home() {
           for (let i = 0; i < products.length; i++) {
             const data = {
               name: products[i].name,
-              id: products[i].productId,
+              altNames: products[i].altName,
+              pId: products[i].productId,
               url: products[i].images[0],
             };
             productImages.push(data);
@@ -36,12 +39,6 @@ export default function Home() {
           setImagesLoaded(true);
         });
     }
-
-    const idx=[];
-    for (let i = 0; i < 3; i++) {
-      idx.push(getRandomNumber(images.length));
-    }
-    setRandomImgIdx(idx);
   
     const interval = setInterval(() => {
       nextSlide();
@@ -50,41 +47,77 @@ export default function Home() {
 
   }, [imagesLoaded]);
 
-  console.log(randomImgIdx);
-
   return (
     <div className="w-full h-full">
-      <div className="w-full h-[60%] relative top-0 bg-amber-500">
-        {
-          imagesLoaded && (
-            images.map((item, index)=>{
-              return(
-              <div key={index} className="h-full w-full absolute top-0 left-0">
-                {/* <h1 className="text-3xl">abcd</h1> */}
-                <img src={item.url} alt="No Image" className={`w-full h-full object-cover transition-opacity duration-1500 ${index === currentIndex ? "opacity-100" : "opacity-0"}`}/>
-              </div>
-              );
-            })
-          )
-        }
 
+      { imagesLoaded ? (
+        <>
+      <div className="w-full h-[70%] relative top-0 bg-amber-500">
+        {imagesLoaded &&
+          images.map((item, index) => {
+            return (
+              <Link  key={index} className="h-full w-full absolute top-0 left-0">
+                <img
+                  src={item.url}
+                  alt="No Image"
+                  className={`w-full h-full object-cover transition-opacity duration-1500 ${
+                    index === currentIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
       </div>
-      <div className="w-full h-[35%] flex justify-center">
-        { imagesLoaded && (
-        <div className="w-full h-full lg:w-[900px] flex justify-evenly items-center">
-            <div className="w-[30%] aspect-square p-[5px] rounded border border-gray-400 relative bg-amber-100">
-              <img src={images[randomImgIdx[1].url]} alt="" className="w-full h-full object-cover"/>
-              <div className="top-[5px] left-[5px] text-center text-blue-600">Product Name</div>
-            </div>
-            <div className="w-[30%] aspect-square p-[5px] rounded border border-gray-400 relative bg-amber-100">
-              <img src={images[getRandomNumber(images.length)].url} alt="" className="w-full h-full object-cover"/>
-            </div>
-            <div className="w-[30%] aspect-square p-[5px] rounded border border-gray-400 relative bg-amber-100">
-              <img src={images[getRandomNumber(images.length)].url} alt="" className="w-full h-full object-cover"/>
-            </div>
-        </div>
+
+      <div className="w-full h-[30%] flex justify-center">
+        {imagesLoaded && (
+          <div className="w-full h-full lg:w-[700px] flex justify-evenly items-center">
+            <Link
+              to={"/overview/" + images[0].pId}
+              className="w-[30%] aspect-square p-[5px] rounded border border-gray-400 relative shadow-xl"
+            >
+              <img
+                src={images[0].url}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+              <div className="top-[5px] left-[5px] text-center text-blue-600">
+                {images[0].name}
+              </div>
+            </Link>
+            <Link
+              to={"/overview/" + images[1].pId}
+              className="w-[30%] aspect-square p-[5px] rounded border border-gray-400 relative bg-amber-100"
+            >
+              <img
+                src={images[1].url}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+              <div className="top-[5px] left-[5px] text-center text-blue-600">
+                {images[1].name}
+              </div>
+            </Link>
+            <Link
+              to={"/overview/" + images[2].pId}
+              className="w-[30%] aspect-square p-[5px] rounded border border-gray-400 relative bg-amber-100"
+            >
+              <img
+                src={images[2].url}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+              <div className="top-[5px] left-[5px] text-center text-blue-600">
+                {images[2].name}
+              </div>
+            </Link>
+          </div>
         )}
       </div>
+      </>
+      ) : (
+        <Loader/>
+      )}
     </div>
   );
 }
